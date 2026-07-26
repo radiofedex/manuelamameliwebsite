@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+---
+
+<BaseLayout
+  title="Privacy e Cookie Policy | Studio Dentistico Manuela Mereu"
+  description="Informativa sulla privacy e sui cookie del sito dello Studio Dentistico Manuela Mereu."
+>
+  <section class="container policy" data-reveal>
+    <p class="eyebrow">Informativa</p>
+    <h1>Privacy e Cookie Policy</h1>
+
+    <h2>Titolare del trattamento</h2>
+    <p>{SITE.name}, {SITE.address}. Per qualsiasi richiesta relativa ai tuoi dati personali puoi scrivere a <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+    <h2>Cookie utilizzati</h2>
+    <p>Questo sito utilizza esclusivamente cookie tecnici necessari al corretto funzionamento delle pagine (ad esempio per ricordare la scelta espressa nel banner cookie). Non vengono utilizzati cookie di profilazione o di terze parti a scopo pubblicitario.</p>
+
+    <h2>Dati raccolti tramite il modulo di contatto</h2>
+    <p>I dati inseriti nel modulo "Richiedi un appuntamento" (nome, email, telefono, data preferita, messaggio) sono utilizzati esclusivamente per rispondere alla tua richiesta e organizzare la visita, e non vengono condivisi con terze parti.</p>
+
+    <h2>I tuoi diritti</h2>
+    <p>In qualsiasi momento puoi richiedere l'accesso, la rettifica o la cancellazione dei tuoi dati personali, contattandoci ai recapiti indicati in questa pagina.</p>
+  </section>
+</BaseLayout>
+
+<style>
+  .policy {
+    max-width: 42rem;
+    padding-block: var(--space-2xl);
+  }
+
+  .policy h2 {
+    font-size: var(--step-h3);
+    margin-top: var(--space-lg);
+  }
+
+  .policy p {
+    color: var(--ink-soft);
+  }
+
+  .policy a {
+    color: var(--teal-dark);
+  }
+</style>

@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArcDivider from '../components/ArcDivider.astro';
+import Accordion from '../components/Accordion.astro';
+import { FAQ_ITEMS } from '../data/faq';
+---
+
+<BaseLayout
+  title="Domande Frequenti | Studio Dentistico Manuela Mereu"
+  description="Le risposte alle domande più frequenti su orari, parcheggio, accessibilità e prima visita presso lo Studio Dentistico Manuela Mereu a Cagliari."
+>
+  <section class="container page-hero" data-reveal>
+    <p class="eyebrow">FAQ</p>
+    <h1>Domande frequenti</h1>
+    <p class="section-heading__lead">Le risposte alle domande che ci vengono fatte più spesso. Per qualsiasi altro dubbio, siamo a disposizione su WhatsApp o in studio.</p>
+  </section>
+
+  <ArcDivider variant="smile" color="var(--cream-alt)" bg="var(--sand)" />
+
+  <section class="faq-body">
+    <div class="container faq-body__inner" data-reveal>
+      <Accordion items={FAQ_ITEMS} />
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+      <h2>Non hai trovato risposta?</h2>
+      <p>Scrivici, siamo felici di aiutarti a chiarire ogni dubbio prima della tua visita.</p>
+      <div class="cta-band__actions">
+        <a class="pill-button pill-button--primary" href="/contatti">Contattaci</a>
+        <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl) var(--space-lg);
+    max-width: 40rem;
+  }
+
+  .section-heading__lead {
+    font-size: var(--step-lead);
+    color: var(--ink-soft);
+  }
+
+  .faq-body {
+    background: var(--cream-alt);
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .faq-body__inner {
+    max-width: 44rem;
+  }
+
+  .cta-band {
+    padding-block: var(--space-xl) var(--space-2xl);
+    text-align: center;
+  }
+
+  .cta-band__inner {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+</style>

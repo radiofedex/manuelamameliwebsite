@@ -1,0 +1,41 @@
+---
+interface Props {
+  variant?: 'smile' | 'terrace';
+  flip?: boolean;
+  color?: string;
+  bg?: string;
+}
+
+const { variant = 'smile', flip = false, color = 'var(--cream-alt)', bg = 'transparent' } = Astro.props;
+
+const paths = {
+  smile: 'M0,32 C 240,96 1200,96 1440,20 L1440,120 L0,120 Z',
+  terrace:
+    'M0,70 C 120,70 120,30 240,30 C 360,30 360,70 480,70 C 600,70 600,20 720,20 C 840,20 840,70 960,70 C 1080,70 1080,30 1200,30 C 1320,30 1320,70 1440,70 L1440,120 L0,120 Z',
+};
+---
+
+<div class="arc-divider" class:list={{ 'arc-divider--flip': flip }} style={{ background: bg }} aria-hidden="true">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d={paths[variant]} fill={color}></path>
+  </svg>
+</div>
+
+<style>
+  .arc-divider {
+    display: block;
+    line-height: 0;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .arc-divider svg {
+    width: 100%;
+    height: clamp(2.5rem, 6vw, 5rem);
+    display: block;
+  }
+
+  .arc-divider--flip {
+    transform: scaleY(-1);
+  }
+</style>

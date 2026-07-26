@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import ArcDivider from '../../components/ArcDivider.astro';
+import { SERVICE_IMAGES } from '../../data/service-images';
+
+const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout
+  title="Servizi e Trattamenti Odontoiatrici a Cagliari | Studio Mereu"
+  description="Scopri tutti i trattamenti dello Studio Dentistico Manuela Mereu a Cagliari: igiene orale, sbiancamento, implantologia, odontoiatria pediatrica e altro."
+>
+  <section class="container page-hero" data-reveal>
+    <p class="eyebrow">Servizi</p>
+    <h1>Trattamenti pensati per il tuo sorriso</h1>
+    <p class="section-heading__lead">Ogni percorso di cura è costruito intorno a te, con tecnologie moderne e un approccio sempre attento.</p>
+  </section>
+
+  <ArcDivider variant="smile" color="var(--cream-alt)" bg="var(--sand)" />
+
+  <section class="container services-grid">
+    {services.map((service, i) => (
+      <div data-reveal style={`transition-delay:${(i % 4) * 80}ms`}>
+        <ServiceCard
+          title={service.data.title}
+          shortDescription={service.data.shortDescription}
+          href={`/servizi/${service.id}`}
+          icon={service.data.icon}
+          accent={service.data.accent}
+          image={SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES].src}
+          imageAlt={SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES].alt}
+        />
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl) var(--space-lg);
+    max-width: 40rem;
+  }
+
+  .section-heading__lead {
+    font-size: var(--step-lead);
+    color: var(--ink-soft);
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+    gap: var(--space-md);
+    padding-bottom: var(--space-2xl);
+  }
+</style>

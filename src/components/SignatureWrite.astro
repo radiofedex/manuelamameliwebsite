@@ -1,0 +1,139 @@
+---
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+import opentype from 'opentype.js';
+
+interface Props {
+  text: string;
+  fontSize?: number;
+  color?: string;
+}
+
+const { text, fontSize = 110, color = 'var(--teal-light)' } = Astro.props;
+
+const fontPath = path.resolve(
+  process.cwd(),
+  'node_modules/@fontsource/mrs-saint-delafield/files/mrs-saint-delafield-latin-400-normal.woff'
+);
+const buffer = readFileSync(fontPath);
+const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+const font = opentype.parse(arrayBuffer);
+
+const otPath = font.getPath(text, 0, 0, fontSize);
+const d = otPath.toPathData(2);
+const bbox = otPath.getBoundingBox();
+const pad = fontSize * 0.08;
+const viewBox = `${bbox.x1 - pad} ${bbox.y1 - pad} ${bbox.x2 - bbox.x1 + pad * 2} ${bbox.y2 - bbox.y1 + pad * 2}`;
+const strokeWidth = fontSize * 0.028;
+const tipRadius = fontSize * 0.045;
+const tipY = (bbox.y1 + bbox.y2) / 2 + fontSize * 0.08;
+---
+
+<span class="signature-write" data-reveal>
+  <svg viewBox={viewBox} role="img" aria-label={text}>
+    <path class="signature-write__fill" d={d} fill={color} opacity="0"></path>
+    <path
+      class="signature-write__stroke"
+      d={d}
+      fill="none"
+      stroke={color}
+      stroke-width={strokeWidth}
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      pathLength="1"
+    ></path>
+    <circle class="signature-write__tip" r={tipRadius} cx={bbox.x1} cy={tipY} fill={color}></circle>
+  </svg>
+</span>
+
+<style define:vars={{ tipStartX: bbox.x1, tipEndX: bbox.x2, sigColor: color }}>
+  .signature-write {
+    display: inline-block;
+    width: 100%;
+    max-width: 26rem;
+    filter: drop-shadow(0 0 16px color-mix(in srgb, var(--sigColor) 55%, transparent));
+  }
+
+  .signature-write svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .signature-write__stroke {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .signature-write__fill {
+    opacity: 0;
+  }
+
+  .signature-write__tip {
+    cx: var(--tipStartX);
+    opacity: 0;
+  }
+
+  [data-reveal].is-visible .signature-write__stroke {
+    animation: signature-draw 1.7s cubic-bezier(0.6, 0.02, 0.4, 1) forwards;
+    animation-delay: 0.3s;
+  }
+
+  [data-reveal].is-visible .signature-write__tip {
+    animation: signature-tip-move 1.7s cubic-bezier(0.6, 0.02, 0.4, 1) forwards,
+      signature-tip-fade 1.7s linear forwards;
+    animation-delay: 0.3s;
+  }
+
+  [data-reveal].is-visible .signature-write__fill {
+    animation: signature-fill 0.6s ease-out forwards;
+    animation-delay: 1.9s;
+  }
+
+  @keyframes signature-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes signature-tip-move {
+    to {
+      cx: var(--tipEndX);
+    }
+  }
+
+  @keyframes signature-tip-fade {
+    0% {
+      opacity: 1;
+    }
+    88% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes signature-fill {
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .signature-write__stroke {
+      animation: none !important;
+      stroke-dashoffset: 0 !important;
+      opacity: 0 !important;
+    }
+    .signature-write__tip {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+    .signature-write__fill {
+      animation: none !important;
+      opacity: 1 !important;
+    }
+  }
+</style>

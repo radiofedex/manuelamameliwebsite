@@ -1,0 +1,211 @@
+---
+import { SITE } from '../data/site';
+
+const today = new Date().toISOString().split('T')[0];
+---
+
+<form class="contact-form" data-contact-form novalidate>
+  <div class="field">
+    <label for="nome">Nome e cognome</label>
+    <input id="nome" name="nome" type="text" autocomplete="name" required minlength="2" />
+    <p class="field__error" data-error-for="nome" role="alert"></p>
+  </div>
+
+  <div class="field">
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" autocomplete="email" required />
+    <p class="field__error" data-error-for="email" role="alert"></p>
+  </div>
+
+  <div class="field">
+    <label for="telefono">Telefono</label>
+    <input id="telefono" name="telefono" type="tel" autocomplete="tel" required minlength="6" />
+    <p class="field__error" data-error-for="telefono" role="alert"></p>
+  </div>
+
+  <div class="field">
+    <label for="data">Data preferita</label>
+    <input id="data" name="data" type="date" required min={today} />
+    <p class="field__error" data-error-for="data" role="alert"></p>
+  </div>
+
+  <div class="field field--full">
+    <label for="messaggio">Messaggio</label>
+    <textarea id="messaggio" name="messaggio" rows="4" required minlength="10"></textarea>
+    <p class="field__error" data-error-for="messaggio" role="alert"></p>
+  </div>
+
+  <div class="field field--full">
+    <button class="pill-button pill-button--primary" type="submit">Invia richiesta</button>
+    <p class="contact-form__note">Cliccando su "Invia richiesta" si aprirà il tuo programma di posta con il messaggio già pronto per {SITE.email}.</p>
+  </div>
+
+  <p class="contact-form__status" data-form-status role="status" aria-live="polite" hidden></p>
+</form>
+
+<style>
+  .contact-form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3xs);
+  }
+
+  .field--full {
+    grid-column: 1 / -1;
+  }
+
+  label {
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+  }
+
+  input,
+  textarea {
+    font: inherit;
+    padding: 0.75rem 0.9rem;
+    border-radius: 0.75rem;
+    border: 1px solid var(--line);
+    background: var(--white);
+    color: var(--ink);
+  }
+
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 1px;
+  }
+
+  input[aria-invalid='true'],
+  textarea[aria-invalid='true'] {
+    border-color: var(--clay-dark);
+  }
+
+  .field__error {
+    margin: 0;
+    min-height: 1.1em;
+    font-size: 0.8rem;
+    color: var(--clay-dark);
+  }
+
+  .contact-form__note {
+    margin: var(--space-2xs) 0 0;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+  }
+
+  .contact-form__status {
+    grid-column: 1 / -1;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--teal) 14%, transparent);
+    color: var(--teal-dark);
+    font-family: var(--font-label);
+    font-size: 0.9rem;
+  }
+
+  .contact-form__status[data-tone='error'] {
+    background: color-mix(in srgb, var(--clay) 16%, transparent);
+    color: var(--clay-dark);
+  }
+
+  @media (max-width: 640px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const status = document.querySelector<HTMLParagraphElement>('[data-form-status]');
+  const RECIPIENT = 'informazioni@manuelamereu.it';
+
+  function setError(field: HTMLInputElement | HTMLTextAreaElement, message: string) {
+    field.setAttribute('aria-invalid', message ? 'true' : 'false');
+    const error = form?.querySelector<HTMLParagraphElement>(`[data-error-for="${field.name}"]`);
+    if (error) error.textContent = message;
+  }
+
+  function validateField(field: HTMLInputElement | HTMLTextAreaElement): boolean {
+    if (field.validity.valueMissing) {
+      setError(field, 'Questo campo è obbligatorio.');
+      return false;
+    }
+    if (field.name === 'email' && field.validity.typeMismatch) {
+      setError(field, 'Inserisci un indirizzo email valido.');
+      return false;
+    }
+    if (field.name === 'telefono' && !/^[+\d][\d\s]{5,}$/.test(field.value.trim())) {
+      setError(field, 'Inserisci un numero di telefono valido.');
+      return false;
+    }
+    if (field.validity.tooShort) {
+      setError(field, `Servono almeno ${field.minLength} caratteri.`);
+      return false;
+    }
+    if (field.name === 'data') {
+      const chosen = new Date(field.value);
+      const now = new Date();
+      now.setHours(0, 0, 0, 0);
+      if (chosen < now) {
+        setError(field, 'Scegli una data da oggi in poi.');
+        return false;
+      }
+    }
+    setError(field, '');
+    return true;
+  }
+
+  if (form) {
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input, textarea'));
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => validateField(field));
+      field.addEventListener('input', () => {
+        if (field.getAttribute('aria-invalid') === 'true') validateField(field);
+      });
+    });
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const allValid = fields.map(validateField).every(Boolean);
+
+      if (!allValid) {
+        if (status) {
+          status.hidden = false;
+          status.dataset.tone = 'error';
+          status.textContent = 'Controlla i campi evidenziati prima di inviare la richiesta.';
+        }
+        fields.find((f) => f.getAttribute('aria-invalid') === 'true')?.focus();
+        return;
+      }
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      const body = [
+        `Nome: ${data.nome}`,
+        `Email: ${data.email}`,
+        `Telefono: ${data.telefono}`,
+        `Data preferita: ${data.data}`,
+        '',
+        String(data.messaggio),
+      ].join('\n');
+
+      const mailto = `mailto:${RECIPIENT}?subject=${encodeURIComponent('Richiesta di appuntamento')}&body=${encodeURIComponent(body)}`;
+      window.location.href = mailto;
+
+      if (status) {
+        status.hidden = false;
+        status.dataset.tone = 'success';
+        status.textContent = "Richiesta pronta: si è aperto il tuo programma di posta per inviarla, oppure scrivici direttamente su WhatsApp.";
+      }
+      form.reset();
+    });
+  }
+</script>

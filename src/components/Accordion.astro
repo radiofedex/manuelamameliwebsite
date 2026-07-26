@@ -1,0 +1,129 @@
+---
+interface Item {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items: readonly Item[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="accordion" data-accordion>
+  {items.map((item, i) => (
+    <div class="accordion__item">
+      <h3>
+        <button
+          class="accordion__trigger"
+          type="button"
+          aria-expanded="false"
+          aria-controls={`faq-panel-${i}`}
+          id={`faq-trigger-${i}`}
+        >
+          <span>{item.question}</span>
+          <span class="accordion__icon" aria-hidden="true"></span>
+        </button>
+      </h3>
+      <div class="accordion__panel" id={`faq-panel-${i}`} role="region" aria-labelledby={`faq-trigger-${i}`} hidden>
+        <p>{item.answer}</p>
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .accordion {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--line);
+  }
+
+  .accordion__item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .accordion__item h3 {
+    margin: 0;
+    font-family: var(--font-body);
+  }
+
+  .accordion__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: var(--step-lead);
+    font-weight: 500;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .accordion__icon {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    position: relative;
+  }
+
+  .accordion__icon::before,
+  .accordion__icon::after {
+    content: '';
+    position: absolute;
+    background: var(--teal);
+    border-radius: 2px;
+    transition: transform var(--duration-standard) var(--ease-standard);
+  }
+
+  .accordion__icon::before {
+    left: 0;
+    top: 50%;
+    width: 100%;
+    height: 2px;
+    transform: translateY(-50%);
+  }
+
+  .accordion__icon::after {
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    transform: translateX(-50%);
+  }
+
+  .accordion__trigger[aria-expanded='true'] .accordion__icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .accordion__panel {
+    padding-bottom: var(--space-md);
+    max-width: 42rem;
+    color: var(--ink-soft);
+  }
+
+  .accordion__panel p {
+    margin: 0;
+  }
+</style>
+
+<script>
+  const accordion = document.querySelector('[data-accordion]');
+
+  accordion?.addEventListener('click', (event) => {
+    const trigger = (event.target as HTMLElement).closest<HTMLButtonElement>('.accordion__trigger');
+    if (!trigger) return;
+
+    const panel = document.getElementById(trigger.getAttribute('aria-controls') ?? '');
+    const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+    trigger.setAttribute('aria-expanded', String(!isOpen));
+    if (panel) panel.hidden = isOpen;
+  });
+</script>

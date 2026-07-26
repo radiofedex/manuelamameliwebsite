@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  title: string;
+  shortDescription: string;
+  href: string;
+  icon: 'tooth' | 'sparkle' | 'child' | 'implant' | 'filling' | 'smile' | 'bridge' | 'scalpel';
+  image: ImageMetadata;
+  imageAlt: string;
+  accent?: 'teal' | 'clay';
+}
+
+const { title, shortDescription, href, icon, image, imageAlt, accent = 'teal' } = Astro.props;
+---
+
+<a class="tilt-card" data-tilt-card data-accent={accent} href={href}>
+  <div class="tilt-card__stage">
+    <span class="tilt-card__photo">
+      <Image src={image} alt={imageAlt} width={420} height={280} />
+    </span>
+    <span class="tilt-card__badge">
+      <Icon name={icon} size={26} />
+    </span>
+  </div>
+  <div class="tilt-card__body">
+    <h3 class="tilt-card__title">{title}</h3>
+    <p class="tilt-card__desc">{shortDescription}</p>
+    <span class="tilt-card__link">Scopri di più <span aria-hidden="true">&rarr;</span></span>
+  </div>
+</a>
+
+<style>
+  .tilt-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-card);
+    background: var(--cream-alt);
+    border: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    transition: box-shadow var(--duration-standard) var(--ease-standard);
+  }
+
+  .tilt-card[data-accent='teal'] {
+    --card-accent: var(--teal);
+  }
+
+  .tilt-card[data-accent='clay'] {
+    --card-accent: var(--clay);
+  }
+
+  .tilt-card:hover,
+  .tilt-card:focus-visible {
+    box-shadow: var(--shadow-lift);
+  }
+
+  .tilt-card__stage {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    perspective: 800px;
+    overflow: hidden;
+  }
+
+  .tilt-card__photo {
+    position: absolute;
+    inset: -6%;
+    display: block;
+    transform: translate3d(calc(var(--tilt-x, 0) * -1px), calc(var(--tilt-y, 0) * -1px), 0)
+      rotateX(calc(var(--tilt-y, 0) * -1deg)) rotateY(calc(var(--tilt-x, 0) * 1deg)) scale(1.08);
+    transition: transform 550ms var(--ease-standard);
+    will-change: transform;
+  }
+
+  .tilt-card__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tilt-card__photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 40%, color-mix(in srgb, var(--ink) 55%, transparent) 100%);
+  }
+
+  .tilt-card__badge {
+    position: absolute;
+    left: var(--space-md);
+    bottom: var(--space-md);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background: var(--card-accent);
+    color: var(--white);
+    box-shadow: var(--shadow-soft);
+    transform: translate3d(calc(var(--tilt-x, 0) * 1px), calc(var(--tilt-y, 0) * 1px), 0);
+    transition: transform 550ms var(--ease-standard);
+    will-change: transform;
+  }
+
+  .tilt-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-md) var(--space-lg);
+    flex-grow: 1;
+  }
+
+  .tilt-card__title {
+    font-size: var(--step-h3);
+    margin: 0;
+  }
+
+  .tilt-card__desc {
+    color: var(--ink-soft);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .tilt-card__link {
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--card-accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tilt-card__photo,
+    .tilt-card__badge {
+      transition: none;
+    }
+  }
+</style>

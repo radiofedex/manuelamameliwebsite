@@ -1,0 +1,244 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArcDivider from '../components/ArcDivider.astro';
+import PhotoMarquee from '../components/PhotoMarquee.astro';
+import portrait from '../assets/images/team/manuela-mereu-ritratto.jpg';
+import signature from '../assets/images/team/manuela-mereu-firma.png';
+import esterno from '../assets/images/studio/esterno-edificio.jpg';
+import consulenzaFamiglia from '../assets/images/studio/consulenza-famiglia.jpg';
+import salaAttesa from '../assets/images/studio/sala-attesa.jpg';
+import salaAttesaAlt from '../assets/images/studio/sala-attesa-alt.jpg';
+import attrezzature from '../assets/images/studio/attrezzature.jpg';
+import riunito from '../assets/images/studio/riunito-odontoiatrico.jpg';
+import ingresso from '../assets/images/studio/ingresso.jpg';
+import salaColloquio from '../assets/images/studio/sala-colloquio.jpg';
+
+const gallery = [
+  { src: esterno, alt: 'Facciata dell’edificio dello Studio Dentistico Manuela Mereu' },
+  { src: salaAttesa, alt: 'Sala d’attesa dello studio dentistico a Cagliari' },
+  { src: attrezzature, alt: 'Attrezzature odontoiatriche moderne dello studio' },
+  { src: riunito, alt: 'Riunito odontoiatrico in una delle sale operative' },
+  { src: ingresso, alt: 'Ingresso dello Studio Dentistico Manuela Mereu' },
+  { src: salaColloquio, alt: 'Sala colloqui per il confronto con i pazienti' },
+  { src: salaAttesaAlt, alt: 'Dettaglio della sala d’attesa, luminosa e accogliente' },
+];
+---
+
+<BaseLayout
+  title="Chi Siamo | Studio Dentistico Manuela Mereu, Cagliari"
+  description="Da 22 anni lo Studio Dentistico Manuela Mereu si prende cura dei pazienti a Cagliari, in uno spazio moderno, accogliente e senza barriere architettoniche."
+>
+  <section class="container page-hero" data-reveal>
+    <p class="eyebrow">Chi siamo</p>
+    <h1>Uno studio nato per prendersi cura di te</h1>
+    <p class="section-heading__lead">Da 22 anni, lo Studio Dentistico Manuela Mereu offre a Cagliari terapie odontoiatriche moderne, in uno spazio pensato per accogliere ogni paziente con attenzione e professionalità.</p>
+  </section>
+
+  <section class="container story">
+    <div class="story__media" data-reveal>
+      <Image src={portrait} alt="Dott.ssa Manuela Mereu, titolare dello studio" width={420} height={520} />
+    </div>
+    <div class="story__copy" data-reveal style="transition-delay:100ms">
+      <h2>La nostra storia</h2>
+      <p>Lo studio nasce dalla volontà della Dott.ssa Manuela Mereu di offrire a Cagliari un punto di riferimento per la salute orale, costruito attorno alla persona prima ancora che alla cura. In 22 anni di attività, questo approccio non è cambiato: ogni percorso di trattamento nasce dall'ascolto.</p>
+      <Image src={signature} alt="Firma di Manuela Mereu" width={170} height={44} class="story__signature" />
+    </div>
+  </section>
+
+  <ArcDivider variant="smile" color="var(--cream-alt)" bg="var(--sand)" />
+
+  <section class="approach">
+    <div class="container approach__inner">
+      <div class="approach__copy" data-reveal>
+        <p class="eyebrow">Il nostro approccio</p>
+        <h2>Un percorso di cura costruito su misura</h2>
+        <p>Che si tratti di un controllo di routine o di un percorso più articolato, lavoriamo per far sentire ogni paziente ascoltato, con spiegazioni chiare in ogni fase della visita. Un'attenzione che riserviamo anche ai pazienti più piccoli, per costruire fin da subito un buon rapporto con la cura dentale.</p>
+      </div>
+      <div class="approach__media" data-reveal style="transition-delay:100ms">
+        <Image src={consulenzaFamiglia} alt="Colloquio con una famiglia in studio" width={480} height={360} />
+      </div>
+    </div>
+  </section>
+
+  <section class="container facts" data-reveal>
+    <div class="fact"><strong data-count-to="22">0</strong><span>anni di attività a Cagliari</span></div>
+    <div class="fact"><strong data-count-to="0">0</strong><span>barriere architettoniche</span></div>
+    <div class="fact"><strong>Sì</strong><span>ampio parcheggio in Piazza dei Centomila</span></div>
+  </section>
+
+  <ArcDivider variant="terrace" flip color="var(--teal)" bg="var(--sand)" />
+
+  <section class="gallery-section">
+    <div class="container section-heading" data-reveal>
+      <p class="eyebrow">Tecnologie e spazi</p>
+      <h2>Uno spazio moderno, pensato per te</h2>
+      <p>Ambienti luminosi, tecnologie aggiornate e nessuna barriera architettonica: tutto è pensato per il tuo comfort.</p>
+    </div>
+    <div data-reveal>
+      <PhotoMarquee photos={gallery} speed={48} />
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="container cta-band__inner" data-reveal>
+      <h2>Vieni a conoscerci</h2>
+      <p>{'Viale Armando Diaz, 30, Cagliari'}</p>
+      <div class="cta-band__actions">
+        <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+        <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding-block: var(--space-2xl) var(--space-lg);
+    max-width: 40rem;
+  }
+
+  .section-heading__lead {
+    font-size: var(--step-lead);
+    color: var(--ink-soft);
+  }
+
+  .story {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+    padding-block: var(--space-xl);
+  }
+
+  .story__media img {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    object-fit: cover;
+    width: 100%;
+    max-width: 22rem;
+    aspect-ratio: 4/5;
+  }
+
+  .story__signature {
+    height: 2.5rem;
+    width: auto;
+    margin-top: var(--space-sm);
+  }
+
+  @media (min-width: 900px) {
+    .story {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+  }
+
+  .approach {
+    background: var(--cream-alt);
+    padding-block: var(--space-xl);
+  }
+
+  .approach__inner {
+    display: grid;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .approach__media img {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    object-fit: cover;
+    width: 100%;
+  }
+
+  @media (min-width: 900px) {
+    .approach__inner {
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+  }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: var(--space-lg);
+    padding-block: var(--space-xl);
+    text-align: center;
+  }
+
+  .fact strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--step-h1);
+    color: var(--teal-dark);
+  }
+
+  .fact span {
+    color: var(--ink-soft);
+    font-family: var(--font-label);
+    font-size: 0.85rem;
+  }
+
+  .gallery-section {
+    padding-bottom: var(--space-2xl);
+  }
+
+  .cta-band {
+    background: var(--sand);
+    padding-block: var(--space-xl) var(--space-2xl);
+    text-align: center;
+  }
+
+  .cta-band__inner {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+
+  .cta-band__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-md);
+  }
+</style>
+
+<script>
+  function initCounters() {
+    const counters = document.querySelectorAll<HTMLElement>('[data-count-to]:not([data-counted])');
+    if (!counters.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const animate = (el: HTMLElement) => {
+      const target = Number(el.dataset.countTo);
+      el.dataset.counted = 'true';
+      if (prefersReducedMotion || target === 0) {
+        el.textContent = String(target);
+        return;
+      }
+      const duration = 900;
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min((now - start) / duration, 1);
+        el.textContent = String(Math.round(progress * target));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            animate(entry.target as HTMLElement);
+            observer.unobserve(entry.target);
+          }
+        }
+      },
+      { threshold: 0.6 }
+    );
+
+    counters.forEach((el) => observer.observe(el));
+  }
+
+  initCounters();
+  document.addEventListener('astro:page-load', initCounters);
+</script>

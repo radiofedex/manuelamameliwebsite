@@ -1,0 +1,133 @@
+---
+import { NAV_LINKS, SITE } from '../data/site';
+
+const services = [
+  { label: 'Igiene Orale', href: '/servizi/igiene-orale' },
+  { label: 'Sbiancamento Dentale', href: '/servizi/sbiancamento-dentale' },
+  { label: 'Odontoiatria Pediatrica', href: '/servizi/odontoiatria-pediatrica' },
+  { label: 'Implantologia', href: '/servizi/implantologia' },
+  { label: 'Conservativa Estetica', href: '/servizi/conservativa-estetica' },
+  { label: 'Cosmesi Dentale', href: '/servizi/cosmesi-dentale' },
+  { label: 'Protesi Dentale', href: '/servizi/protesi-dentale' },
+  { label: 'Chirurgia Orale', href: '/servizi/chirurgia-orale' },
+];
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div class="site-footer__brand">
+      <span class="site-footer__wordmark">Manuela Mereu</span>
+      <span class="site-footer__tag">Studio Dentistico &mdash; Cagliari</span>
+      <p>{SITE.address}</p>
+      <p><a href={SITE.phoneHref}>{SITE.phone}</a></p>
+      <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      <p>{SITE.hours}</p>
+    </div>
+
+    <nav aria-label="Link rapidi">
+      <h2 class="site-footer__heading">Navigazione</h2>
+      <ul>
+        {NAV_LINKS.map((link) => (
+          <li><a href={link.href}>{link.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav aria-label="Trattamenti">
+      <h2 class="site-footer__heading">Trattamenti</h2>
+      <ul>
+        {services.map((service) => (
+          <li><a href={service.href}>{service.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="container site-footer__bottom">
+    <p>&copy; {year} {SITE.name}. Tutti i diritti riservati.</p>
+    <a href="/privacy-cookie-policy">Privacy &amp; Cookie Policy</a>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: color-mix(in srgb, var(--sand) 88%, transparent);
+    padding-block: var(--space-2xl) var(--space-lg);
+    margin-top: var(--space-2xl);
+  }
+
+  .site-footer a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .site-footer a:hover {
+    color: var(--sand);
+    text-decoration: underline;
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: var(--space-lg);
+  }
+
+  .site-footer__wordmark {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    color: var(--sand);
+  }
+
+  .site-footer__tag {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer p {
+    margin: 0 0 var(--space-3xs);
+    font-size: 0.9rem;
+  }
+
+  .site-footer__heading {
+    font-family: var(--font-label);
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--clay);
+    margin-bottom: var(--space-sm);
+  }
+
+  .site-footer ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2xs);
+    font-size: 0.9rem;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-lg);
+    border-top: 1px solid color-mix(in srgb, var(--sand) 20%, transparent);
+    font-size: 0.8rem;
+  }
+
+  @media (max-width: 720px) {
+    .site-footer__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

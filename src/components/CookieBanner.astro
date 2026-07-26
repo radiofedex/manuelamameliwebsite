@@ -1,0 +1,75 @@
+<div class="cookie-banner" data-cookie-banner hidden>
+  <div class="container cookie-banner__inner">
+    <p>
+      Usiamo solo cookie tecnici necessari al funzionamento del sito. Nessun dato viene condiviso con terze parti a scopo pubblicitario.
+      <a href="/privacy-cookie-policy">Leggi l'informativa completa</a>.
+    </p>
+    <div class="cookie-banner__actions">
+      <button type="button" class="pill-button pill-button--ghost" data-cookie-decline>Rifiuta</button>
+      <button type="button" class="pill-button pill-button--primary" data-cookie-accept>Accetta</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+    background: var(--ink);
+    color: color-mix(in srgb, var(--sand) 92%, transparent);
+    padding-block: var(--space-sm);
+    box-shadow: 0 -12px 30px -20px rgba(0, 0, 0, 0.5);
+  }
+
+  .cookie-banner__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+  }
+
+  .cookie-banner p {
+    margin: 0;
+    font-size: 0.85rem;
+    max-width: 46rem;
+  }
+
+  .cookie-banner a {
+    color: var(--sand);
+    text-decoration: underline;
+  }
+
+  .cookie-banner__actions {
+    display: flex;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  const STORAGE_KEY = 'studio-mereu-cookie-choice';
+  const banner = document.querySelector<HTMLElement>('[data-cookie-banner]');
+
+  function initBanner() {
+    if (!banner) return;
+    const choice = localStorage.getItem(STORAGE_KEY);
+    banner.hidden = Boolean(choice);
+  }
+
+  document.querySelector('[data-cookie-accept]')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'accepted');
+    if (banner) banner.hidden = true;
+  });
+
+  document.querySelector('[data-cookie-decline]')?.addEventListener('click', () => {
+    localStorage.setItem(STORAGE_KEY, 'declined');
+    if (banner) banner.hidden = true;
+  });
+
+  initBanner();
+  document.addEventListener('astro:page-load', initBanner);
+</script>
