@@ -1,43 +1,44 @@
-# Astro Starter Kit: Minimal
+# Studio Dentistico Manuela Mereu — sito web
+
+Sito Astro per lo Studio Dentistico Manuela Mereu (Cagliari), in sostituzione del vecchio sito WordPress a pagina singola.
+
+## Avvio rapido
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev       # http://localhost:4321
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+```sh
+npm run build     # genera il sito statico in ./dist
+npm run preview   # anteprima della build di produzione
+```
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
+## Struttura del progetto
 
 ```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+src/
+  content.config.ts        Schema della content collection "services"
+  content/services/*.md    Un file per ciascuno degli 8 trattamenti
+  data/
+    site.ts                Dati reali dello studio (indirizzo, telefono, orari) — unica fonte
+    faq.ts                 Domande e risposte della pagina FAQ
+    service-images.ts      Mappa trattamento -> immagine (vedi nota sotto)
+  components/               Componenti riutilizzabili (Header, Footer, ServiceCard, ContactForm, ...)
+  layouts/BaseLayout.astro  Layout comune a tutte le pagine (SEO, header, footer, cookie banner)
+  pages/                    Una route per file/cartella (home, servizi, chi-siamo, faq, contatti)
+  styles/tokens.css         Design tokens: colori, tipografia, spaziature
+  scripts/                  Piccoli script vanilla JS (animazioni scroll, tilt 3D, ecc.)
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Cose da sapere prima di modificare
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- **Trattamenti**: aggiungere/modificare un servizio si fa editando `src/content/services/*.md` (contenuti) e `src/data/service-images.ts` (immagine associata). La pagina `/servizi/[slug].astro` genera automaticamente tutte le pagine dai file markdown.
+- **Immagini dei trattamenti**: sono foto stock gratuite (Pexels, licenza commerciale libera), scelte perché non esistono ancora foto reali dei trattamenti dello studio. Da sostituire con foto vere non appena disponibili.
+- **Foto reali dello studio**: quelle in `src/assets/images/studio/` e `team/` sono state recuperate dal vecchio sito e sono autentiche (esterno edificio, sale, ritratto della Dott.ssa Mereu, firma).
+- **Form contatti**: `ContactForm.astro` valida i campi in tempo reale ma, non essendoci ancora un backend, invia i dati aprendo il client email del visitatore (mailto:) verso l'indirizzo dello studio. Se si vuole un vero invio silenzioso, va collegato un servizio come Web3Forms o Formspree.
+- **Palette colori**: il turchese principale (`--teal` in `src/styles/tokens.css`) è stato campionato dal logo reale dello studio — se si cambia, verificare che resti coerente con quel colore.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Documentazione Astro
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+https://docs.astro.build
