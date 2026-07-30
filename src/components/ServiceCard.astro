@@ -48,10 +48,12 @@ const { title, shortDescription, href, icon, image, imageAlt, accent = 'teal' } 
 
   .tilt-card[data-accent='teal'] {
     --card-accent: var(--teal);
+    --card-accent-fg: var(--ink);
   }
 
   .tilt-card[data-accent='clay'] {
-    --card-accent: var(--clay);
+    --card-accent: var(--ink);
+    --card-accent-fg: var(--white);
   }
 
   .tilt-card:hover,
@@ -100,7 +102,7 @@ const { title, shortDescription, href, icon, image, imageAlt, accent = 'teal' } 
     height: 3rem;
     border-radius: 50%;
     background: var(--card-accent);
-    color: var(--white);
+    color: var(--card-accent-fg);
     box-shadow: var(--shadow-soft);
     transform: translate3d(calc(var(--tilt-x, 0) * 1px), calc(var(--tilt-y, 0) * 1px), 0);
     transition: transform 550ms var(--ease-standard);

@@ -1,21 +1,17 @@
 :root {
-  /* Colore — dal turchese reale del logo dello studio, fresco e non clinico */
-  --sand: #eef7f6;
-  --ink: #16262a;
-  --ink-soft: #4d6267;
-  --teal: #0f9faf;
-  --teal-dark: #0a7986;
-  --teal-deep: #0a3f47;
-  --teal-light: #5fc4d1;
-  --clay: #e35c34;
-  --clay-dark: #b8431f;
-  --clay-light: #f2905f;
-  --gold: #d9a441;
+  /* Colore — gradazioni del turchese reale del logo dello studio (#489eb1) + bianco */
+  --teal: #489eb1;
+  --sand: color-mix(in srgb, var(--teal) 8%, white 92%);
+  --teal-light: color-mix(in srgb, var(--teal) 26%, white 74%);
+  --teal-dark: color-mix(in srgb, var(--teal) 65%, black 35%);
+  --teal-forest: color-mix(in srgb, var(--teal) 40%, black 60%);
+  --ink: color-mix(in srgb, var(--teal) 15%, black 85%);
+  --ink-soft: color-mix(in srgb, var(--ink) 60%, var(--sand) 40%);
   --cream-alt: #ffffff;
-  --line: #d9e8e7;
+  --line: color-mix(in srgb, var(--ink) 12%, var(--sand) 88%);
   --white: #ffffff;
 
-  --gradient-signature: linear-gradient(135deg, var(--teal) 0%, var(--gold) 55%, var(--clay) 100%);
+  --gradient-signature: linear-gradient(135deg, var(--teal-light) 0%, var(--teal) 60%, var(--teal-dark) 100%);
 
   /* Tipografia */
   --font-display: 'Fraunces Variable', 'Georgia', serif;

@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { NAV_LINKS, SITE } from '../data/site';
 import { withBase } from '../utils/url';
+import logoWhite from '../assets/images/brand/logo-mark-white.png';
 
 const services = [
   { label: 'Igiene Orale', href: '/servizi/igiene-orale' },
@@ -19,6 +21,7 @@ const year = new Date().getFullYear();
 <footer class="site-footer">
   <div class="container site-footer__grid">
     <div class="site-footer__brand">
+      <Image src={logoWhite} alt="" width={162} height={131} class="site-footer__mark" />
       <span class="site-footer__wordmark">Manuela Mereu</span>
       <span class="site-footer__tag">Studio Dentistico &mdash; Cagliari</span>
       <p>{SITE.address}</p>
@@ -66,7 +69,7 @@ const year = new Date().getFullYear();
   }
 
   .site-footer a:hover {
-    color: var(--sand);
+    color: var(--teal-light);
     text-decoration: underline;
   }
 
@@ -74,6 +77,13 @@ const year = new Date().getFullYear();
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr;
     gap: var(--space-lg);
+  }
+
+  .site-footer__mark {
+    display: block;
+    width: 2.75rem;
+    height: auto;
+    margin-bottom: var(--space-xs);
   }
 
   .site-footer__wordmark {
@@ -89,7 +99,7 @@ const year = new Date().getFullYear();
     font-size: 0.75rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--clay);
+    color: var(--teal-light);
     margin-bottom: var(--space-sm);
   }
 
@@ -103,7 +113,7 @@ const year = new Date().getFullYear();
     font-size: 0.8rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--clay);
+    color: var(--teal-light);
     margin-bottom: var(--space-sm);
   }
 

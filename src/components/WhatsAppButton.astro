@@ -22,15 +22,17 @@ const href = `${SITE.whatsapp}?text=${encodeURIComponent(SITE.whatsappMessage)}`
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: var(--teal);
+    background: var(--teal-dark);
     color: var(--white);
     box-shadow: var(--shadow-lift);
     transition: transform var(--duration-standard) var(--ease-standard),
-      background-color var(--duration-standard) var(--ease-standard);
+      background-color var(--duration-standard) var(--ease-standard),
+      color var(--duration-standard) var(--ease-standard);
   }
 
   .whatsapp-fab:hover {
-    background: var(--teal-dark);
+    background: var(--teal-forest);
+    color: var(--white);
     transform: translateY(-3px) scale(1.04);
   }
 </style>

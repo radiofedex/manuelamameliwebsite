@@ -80,7 +80,7 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--teal);
+  outline: 3px solid var(--teal-dark);
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -155,23 +155,24 @@ button {
 
 .pill-button--primary {
   background: var(--teal);
-  color: var(--white);
+  color: var(--ink);
   box-shadow: var(--shadow-soft);
 }
 
 .pill-button--primary:hover {
   background: var(--teal-dark);
+  color: var(--white);
   box-shadow: var(--shadow-lift);
 }
 
 .pill-button--secondary {
   background: transparent;
-  color: var(--clay-dark);
-  border-color: var(--clay);
+  color: var(--teal-dark);
+  border-color: var(--teal-dark);
 }
 
 .pill-button--secondary:hover {
-  background: var(--clay);
+  background: var(--teal-dark);
   color: var(--white);
 }
 

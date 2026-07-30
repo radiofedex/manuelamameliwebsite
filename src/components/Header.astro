@@ -1,6 +1,9 @@
 ---
+import { Image } from 'astro:assets';
 import { NAV_LINKS, SITE } from '../data/site';
 import { withBase } from '../utils/url';
+import logoInk from '../assets/images/brand/logo-mark-ink.png';
+import logoWhite from '../assets/images/brand/logo-mark-white.png';
 
 interface Props {
   transparentOnTop?: boolean;
@@ -18,8 +21,14 @@ const isActive = (href: string) => {
 <header class="site-header" class:list={{ 'site-header--dark-top': transparentOnTop }} data-header>
   <div class="container site-header__bar">
     <a href={withBase('/')} class="wordmark">
-      <span class="wordmark__name">Manuela Mereu</span>
-      <span class="wordmark__label">Studio Dentistico</span>
+      <span class="wordmark__mark">
+        <Image src={logoInk} alt="" width={162} height={131} class="wordmark__mark-img wordmark__mark-img--ink" />
+        <Image src={logoWhite} alt="" width={162} height={131} class="wordmark__mark-img wordmark__mark-img--white" />
+      </span>
+      <span class="wordmark__text">
+        <span class="wordmark__name">Manuela Mereu</span>
+        <span class="wordmark__label">Studio Dentistico</span>
+      </span>
     </a>
 
     <nav class="site-nav" aria-label="Navigazione principale">
@@ -82,6 +91,14 @@ const isActive = (href: string) => {
     color: var(--white);
   }
 
+  .site-header--dark-top:not([data-scrolled='true']) .wordmark__mark-img--ink {
+    opacity: 0;
+  }
+
+  .site-header--dark-top:not([data-scrolled='true']) .wordmark__mark-img--white {
+    opacity: 1;
+  }
+
   .site-header--dark-top:not([data-scrolled='true']) .wordmark__label {
     color: var(--teal-light);
   }
@@ -115,10 +132,37 @@ const isActive = (href: string) => {
 
   .wordmark {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2xs);
     line-height: 1.1;
     text-decoration: none;
     color: var(--ink);
+  }
+
+  .wordmark__mark {
+    position: relative;
+    display: inline-block;
+    width: 2.1rem;
+    height: 1.7rem;
+    flex-shrink: 0;
+  }
+
+  .wordmark__mark-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity var(--duration-standard) var(--ease-standard);
+  }
+
+  .wordmark__mark-img--white {
+    opacity: 0;
+  }
+
+  .wordmark__text {
+    display: flex;
+    flex-direction: column;
   }
 
   .wordmark__name {

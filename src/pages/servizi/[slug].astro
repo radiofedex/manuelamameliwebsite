@@ -87,10 +87,12 @@ const image = SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES];
 
   .service-hero[data-accent='teal'] {
     --hero-accent: var(--teal);
+    --hero-accent-fg: var(--ink);
   }
 
   .service-hero[data-accent='clay'] {
-    --hero-accent: var(--clay);
+    --hero-accent: var(--ink);
+    --hero-accent-fg: var(--white);
   }
 
   .service-hero__grid {
@@ -150,7 +152,7 @@ const image = SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES];
     height: 3.75rem;
     border-radius: 50%;
     background: var(--hero-accent);
-    color: var(--white);
+    color: var(--hero-accent-fg);
     box-shadow: var(--shadow-soft);
     transform: translate3d(calc(var(--tilt-x, 0) * 1px), calc(var(--tilt-y, 0) * 1px), 0);
     transition: transform 550ms var(--ease-standard);

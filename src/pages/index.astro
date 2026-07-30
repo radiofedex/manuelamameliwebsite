@@ -4,12 +4,11 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArcDivider from '../components/ArcDivider.astro';
 import ServiceCard from '../components/ServiceCard.astro';
-import Icon from '../components/Icon.astro';
 import PhotoMarquee from '../components/PhotoMarquee.astro';
 import SignatureWrite from '../components/SignatureWrite.astro';
 import { SERVICE_IMAGES } from '../data/service-images';
 import { withBase } from '../utils/url';
-import heroPortrait from '../assets/images/team/manuela-mereu-ritratto.jpg';
+import heroPortrait from '../assets/images/team/manuela-mereu-ritratto-chiaro.png';
 import atWork from '../assets/images/team/manuela-mereu-al-lavoro.jpg';
 import signature from '../assets/images/team/manuela-mereu-firma.png';
 import salaAttesa from '../assets/images/studio/sala-attesa.jpg';
@@ -35,21 +34,20 @@ const studioPhotos = [
 ];
 
 const badges = [
-  { icon: 'clock' as const, label: '22 anni', sub: 'di esperienza a Cagliari' },
-  { icon: 'parking' as const, label: 'Parcheggio', sub: 'ampio, in Piazza dei Centomila' },
-  { icon: 'access' as const, label: 'Accessibile', sub: 'nessuna barriera architettonica' },
-  { icon: 'sparkle' as const, label: 'Ambiente', sub: 'moderno e accogliente' },
+  { label: '22 anni', sub: 'di esperienza a Cagliari' },
+  { label: 'Parcheggio', sub: 'ampio, in Piazza dei Centomila' },
+  { label: 'Accessibile', sub: 'nessuna barriera architettonica' },
+  { label: 'Ambiente', sub: 'moderno e accogliente' },
 ];
 ---
 
 <BaseLayout
   title="Studio Dentistico Manuela Mereu | Dentista a Cagliari"
   description="Studio dentistico a Cagliari in Viale Armando Diaz 30. 22 anni di esperienza, spazio moderno e accogliente, ampio parcheggio. Prenota la tua visita."
-  transparentHeader
 >
   <section class="hero">
     <div class="hero__copy" data-reveal>
-      <p class="eyebrow eyebrow--light">Studio Dentistico a Cagliari</p>
+      <p class="eyebrow">Studio Dentistico a Cagliari</p>
       <SignatureWrite text="Manuela Mereu" />
       <h1>Il tuo sorriso, a Cagliari, in mani esperte da 22 anni.</h1>
       <p class="hero__lead">Cura odontoiatrica moderna e su misura, in uno spazio pensato per farti sentire a tuo agio, dalla prima visita al sorriso che desideri.</p>
@@ -61,21 +59,26 @@ const badges = [
     <div class="hero__media" data-reveal style="transition-delay:120ms">
       <Image src={heroPortrait} alt="Dott.ssa Manuela Mereu, Studio Dentistico a Cagliari" width={760} height={900} loading="eager" fetchpriority="high" />
       <span class="hero__media-fade" aria-hidden="true"></span>
-      <div class="hero__chips">
-        {badges.map((badge, i) => (
-          <div class="chip" style={`transition-delay:${i * 70}ms`}>
-            <span class="chip__icon"><Icon name={badge.icon} size={20} /></span>
-            <span class="chip__text">
-              <strong>{badge.label}</strong>
-              <small>{badge.sub}</small>
-            </span>
-          </div>
-        ))}
-      </div>
     </div>
   </section>
 
-  <ArcDivider variant="smile" color="#000" bg="transparent" />
+  <section class="stats-band">
+    <div class="container stats-band__head" data-reveal>
+      <p class="eyebrow eyebrow--light">Perch&eacute; sceglierci</p>
+      <h2>22 anni di fiducia, un solo studio</h2>
+    </div>
+    <div class="container stats-band__grid">
+      {badges.map((badge, i) => (
+        <div class="stat" data-reveal style={`transition-delay:${i * 110}ms`}>
+          <span class="stat__index">{String(i + 1).padStart(2, '0')}</span>
+          <strong class="stat__label">{badge.label}</strong>
+          <span class="stat__sub">{badge.sub}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <ArcDivider variant="smile" color="var(--sand)" bg="var(--teal-forest)" />
 
   <section class="studio-marquee" data-reveal>
     <p class="container studio-marquee__label eyebrow">Uno sguardo sullo studio</p>
@@ -96,11 +99,11 @@ const badges = [
     </div>
   </section>
 
-  <ArcDivider variant="terrace" color="var(--teal-deep)" bg="var(--sand)" />
+  <ArcDivider variant="terrace" color="var(--teal-light)" bg="var(--sand)" />
 
   <section class="services-teaser">
     <div class="container section-heading" data-reveal>
-      <p class="eyebrow eyebrow--light">I nostri trattamenti</p>
+      <p class="eyebrow">I nostri trattamenti</p>
       <h2>Dalla prevenzione all'estetica</h2>
       <p>Un percorso di cura pensato per ogni esigenza. Scorri per scoprirli tutti.</p>
     </div>
@@ -142,9 +145,9 @@ const badges = [
   .hero {
     display: grid;
     align-items: stretch;
-    min-height: 100vh;
-    min-height: 100svh;
-    background: #000;
+    min-height: 85vh;
+    min-height: 85svh;
+    background: var(--sand);
   }
 
   .hero__copy {
@@ -156,13 +159,13 @@ const badges = [
   }
 
   .hero__copy h1 {
-    color: var(--white);
+    color: var(--ink);
     margin-top: var(--space-sm);
   }
 
   .hero__lead {
     font-size: var(--step-lead);
-    color: color-mix(in srgb, var(--white) 65%, transparent);
+    color: var(--ink-soft);
     max-width: 32rem;
   }
 
@@ -190,56 +193,78 @@ const badges = [
   .hero__media-fade {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, #000 0%, transparent 14%);
+    background: linear-gradient(90deg, var(--sand) 0%, transparent 14%);
     pointer-events: none;
   }
 
-  .hero__chips {
-    position: absolute;
-    left: var(--space-md);
-    right: var(--space-md);
-    bottom: var(--space-md);
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-xs);
+  .stats-band {
+    background: var(--teal-forest);
+    padding-block: var(--space-xl);
   }
 
-  .chip {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2xs);
-    padding: 0.6rem 0.9rem;
-    border-radius: var(--radius-pill);
-    background: color-mix(in srgb, var(--white) 10%, transparent);
-    border: 1px solid color-mix(in srgb, var(--white) 18%, transparent);
-    backdrop-filter: blur(10px);
+  .stats-band__head {
+    max-width: none;
+    margin-bottom: var(--space-lg);
+  }
+
+  @media (min-width: 640px) {
+    .stats-band__head h2 {
+      white-space: nowrap;
+    }
+  }
+
+  .stats-band__head h2 {
     color: var(--white);
+    margin: 0;
   }
 
-  .chip__icon {
-    display: inline-flex;
+  .stats-band .eyebrow--light {
+    margin-bottom: var(--space-sm);
+  }
+
+  .stats-band__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: var(--space-sm);
+    border-top: 2px solid color-mix(in srgb, var(--teal) 45%, transparent);
+  }
+
+  .stat__index {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
     color: var(--teal-light);
   }
 
-  .chip__text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
+  .stat__label {
+    font-family: var(--font-display);
+    font-size: var(--step-h3);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--white);
   }
 
-  .chip__text strong {
-    font-family: var(--font-label);
-    font-size: 0.8rem;
+  .stat__sub {
+    font-size: 0.85rem;
+    color: color-mix(in srgb, var(--white) 68%, transparent);
   }
 
-  .chip__text small {
-    font-size: 0.68rem;
-    color: color-mix(in srgb, var(--white) 75%, transparent);
+  @media (min-width: 700px) {
+    .stats-band__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
   @media (min-width: 900px) {
     .hero {
-      grid-template-columns: 1.3fr 0.7fr;
+      grid-template-columns: 1.6fr 0.4fr;
     }
   }
 
@@ -308,17 +333,17 @@ const badges = [
   }
 
   .services-teaser {
-    background: var(--teal-deep);
-    color: var(--sand);
+    background: var(--teal-light);
+    color: var(--ink);
     padding-block: var(--space-2xl);
   }
 
   .services-teaser h2 {
-    color: var(--white);
+    color: var(--ink);
   }
 
   .services-teaser .section-heading p {
-    color: color-mix(in srgb, var(--sand) 75%, transparent);
+    color: var(--ink-soft);
   }
 
   .eyebrow--light {
@@ -348,13 +373,14 @@ const badges = [
   }
 
   .services-teaser__more .pill-button--ghost {
-    background: transparent;
-    border-color: color-mix(in srgb, var(--sand) 40%, transparent);
-    color: var(--sand);
+    background: var(--cream-alt);
+    border-color: color-mix(in srgb, var(--teal-dark) 25%, transparent);
+    color: var(--teal-dark);
   }
 
   .services-teaser__more .pill-button--ghost:hover {
-    background: color-mix(in srgb, var(--sand) 12%, transparent);
+    background: var(--teal-dark);
+    color: var(--white);
   }
 
   .closing-cta {
@@ -376,7 +402,7 @@ const badges = [
   .closing-cta__overlay {
     position: absolute;
     inset: 0;
-    background: color-mix(in srgb, var(--teal-deep) 82%, transparent);
+    background: color-mix(in srgb, var(--ink) 82%, transparent);
     z-index: -1;
   }
 
