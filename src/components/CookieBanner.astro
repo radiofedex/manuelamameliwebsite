@@ -1,8 +1,12 @@
+---
+import { withBase } from '../utils/url';
+---
+
 <div class="cookie-banner" data-cookie-banner hidden>
   <div class="container cookie-banner__inner">
     <p>
       Usiamo solo cookie tecnici necessari al funzionamento del sito. Nessun dato viene condiviso con terze parti a scopo pubblicitario.
-      <a href="/privacy-cookie-policy">Leggi l'informativa completa</a>.
+      <a href={withBase('/privacy-cookie-policy')}>Leggi l'informativa completa</a>.
     </p>
     <div class="cookie-banner__actions">
       <button type="button" class="pill-button pill-button--ghost" data-cookie-decline>Rifiuta</button>

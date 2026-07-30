@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://www.manuelamereu.it',
+  site: 'https://radiofedex.github.io',
+  base: '/manuelamameliwebsite',
   integrations: [sitemap()]
 });

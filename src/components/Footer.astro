@@ -1,5 +1,6 @@
 ---
 import { NAV_LINKS, SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 const services = [
   { label: 'Igiene Orale', href: '/servizi/igiene-orale' },
@@ -30,7 +31,7 @@ const year = new Date().getFullYear();
       <h2 class="site-footer__heading">Navigazione</h2>
       <ul>
         {NAV_LINKS.map((link) => (
-          <li><a href={link.href}>{link.label}</a></li>
+          <li><a href={withBase(link.href)}>{link.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -39,7 +40,7 @@ const year = new Date().getFullYear();
       <h2 class="site-footer__heading">Trattamenti</h2>
       <ul>
         {services.map((service) => (
-          <li><a href={service.href}>{service.label}</a></li>
+          <li><a href={withBase(service.href)}>{service.label}</a></li>
         ))}
       </ul>
     </nav>
@@ -47,7 +48,7 @@ const year = new Date().getFullYear();
 
   <div class="container site-footer__bottom">
     <p>&copy; {year} {SITE.name}. Tutti i diritti riservati.</p>
-    <a href="/privacy-cookie-policy">Privacy &amp; Cookie Policy</a>
+    <a href={withBase('/privacy-cookie-policy')}>Privacy &amp; Cookie Policy</a>
   </div>
 </footer>
 

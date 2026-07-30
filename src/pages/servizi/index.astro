@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceCard from '../../components/ServiceCard.astro';
 import ArcDivider from '../../components/ArcDivider.astro';
 import { SERVICE_IMAGES } from '../../data/service-images';
+import { withBase } from '../../utils/url';
 
 const services = (await getCollection('services')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -26,7 +27,7 @@ const services = (await getCollection('services')).sort((a, b) => a.data.order -
         <ServiceCard
           title={service.data.title}
           shortDescription={service.data.shortDescription}
-          href={`/servizi/${service.id}`}
+          href={withBase(`/servizi/${service.id}`)}
           icon={service.data.icon}
           accent={service.data.accent}
           image={SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES].src}

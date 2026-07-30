@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ArcDivider from '../components/ArcDivider.astro';
 import Accordion from '../components/Accordion.astro';
 import { FAQ_ITEMS } from '../data/faq';
+import { withBase } from '../utils/url';
 ---
 
 <BaseLayout
@@ -28,7 +29,7 @@ import { FAQ_ITEMS } from '../data/faq';
       <h2>Non hai trovato risposta?</h2>
       <p>Scrivici, siamo felici di aiutarti a chiarire ogni dubbio prima della tua visita.</p>
       <div class="cta-band__actions">
-        <a class="pill-button pill-button--primary" href="/contatti">Contattaci</a>
+        <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Contattaci</a>
         <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
       </div>
     </div>

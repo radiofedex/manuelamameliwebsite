@@ -5,6 +5,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ArcDivider from '../../components/ArcDivider.astro';
 import Icon from '../../components/Icon.astro';
 import { SERVICE_IMAGES } from '../../data/service-images';
+import { withBase } from '../../utils/url';
 
 export async function getStaticPaths() {
   const services = await getCollection('services');
@@ -27,8 +28,8 @@ const image = SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES];
         <h1>{title}</h1>
         <p class="service-hero__intro">{intro}</p>
         <div class="service-hero__actions">
-          <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
-          <a class="pill-button pill-button--ghost" href="/servizi">&larr; Tutti i trattamenti</a>
+          <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
+          <a class="pill-button pill-button--ghost" href={withBase('/servizi')}>&larr; Tutti i trattamenti</a>
         </div>
       </div>
       <div class="service-hero__stage" data-tilt-card>
@@ -70,7 +71,7 @@ const image = SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES];
       <h2>Parliamone insieme</h2>
       <p>Prenota una visita per valutare il percorso più adatto a te, senza impegno.</p>
       <div class="cta-band__actions">
-        <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+        <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
         <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
       </div>
     </div>

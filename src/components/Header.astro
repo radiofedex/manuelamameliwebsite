@@ -1,5 +1,6 @@
 ---
 import { NAV_LINKS, SITE } from '../data/site';
+import { withBase } from '../utils/url';
 
 interface Props {
   transparentOnTop?: boolean;
@@ -8,12 +9,15 @@ interface Props {
 const { transparentOnTop = false } = Astro.props;
 
 const path = Astro.url.pathname;
-const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const isActive = (href: string) => {
+  const target = withBase(href);
+  return href === '/' ? path === target : path.startsWith(target);
+};
 ---
 
 <header class="site-header" class:list={{ 'site-header--dark-top': transparentOnTop }} data-header>
   <div class="container site-header__bar">
-    <a href="/" class="wordmark">
+    <a href={withBase('/')} class="wordmark">
       <span class="wordmark__name">Manuela Mereu</span>
       <span class="wordmark__label">Studio Dentistico</span>
     </a>
@@ -22,14 +26,14 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
       <ul class="site-nav__list">
         {NAV_LINKS.map((link) => (
           <li>
-            <a href={link.href} aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}</a>
+            <a href={withBase(link.href)} aria-current={isActive(link.href) ? 'page' : undefined}>{link.label}</a>
           </li>
         ))}
       </ul>
     </nav>
 
     <div class="site-header__actions">
-      <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+      <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
       <button class="nav-toggle" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav">
         <span class="visually-hidden">Apri il menu</span>
         <span class="nav-toggle__bar"></span>
@@ -42,9 +46,9 @@ const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWit
   <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
     <ul>
       {NAV_LINKS.map((link) => (
-        <li><a href={link.href}>{link.label}</a></li>
+        <li><a href={withBase(link.href)}>{link.label}</a></li>
       ))}
-      <li><a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a></li>
+      <li><a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a></li>
       <li><a class="pill-button pill-button--secondary" href={SITE.whatsapp}>Scrivici su WhatsApp</a></li>
     </ul>
   </div>

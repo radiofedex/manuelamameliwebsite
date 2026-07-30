@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ArcDivider from '../components/ArcDivider.astro';
 import PhotoMarquee from '../components/PhotoMarquee.astro';
+import { withBase } from '../utils/url';
 import portrait from '../assets/images/team/manuela-mereu-ritratto.jpg';
 import signature from '../assets/images/team/manuela-mereu-firma.png';
 import esterno from '../assets/images/studio/esterno-edificio.jpg';
@@ -85,7 +86,7 @@ const gallery = [
       <h2>Vieni a conoscerci</h2>
       <p>{'Viale Armando Diaz, 30, Cagliari'}</p>
       <div class="cta-band__actions">
-        <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+        <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
         <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
       </div>
     </div>

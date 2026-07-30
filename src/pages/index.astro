@@ -8,6 +8,7 @@ import Icon from '../components/Icon.astro';
 import PhotoMarquee from '../components/PhotoMarquee.astro';
 import SignatureWrite from '../components/SignatureWrite.astro';
 import { SERVICE_IMAGES } from '../data/service-images';
+import { withBase } from '../utils/url';
 import heroPortrait from '../assets/images/team/manuela-mereu-ritratto.jpg';
 import atWork from '../assets/images/team/manuela-mereu-al-lavoro.jpg';
 import signature from '../assets/images/team/manuela-mereu-firma.png';
@@ -53,7 +54,7 @@ const badges = [
       <h1>Il tuo sorriso, a Cagliari, in mani esperte da 22 anni.</h1>
       <p class="hero__lead">Cura odontoiatrica moderna e su misura, in uno spazio pensato per farti sentire a tuo agio, dalla prima visita al sorriso che desideri.</p>
       <div class="hero__actions">
-        <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+        <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
         <a class="pill-button pill-button--secondary" href="https://wa.me/393792938759">Scrivici su WhatsApp</a>
       </div>
     </div>
@@ -91,7 +92,7 @@ const badges = [
       <p class="eyebrow">Chi si prende cura di te</p>
       <h2>Un rapporto di fiducia, prima ancora che una cura</h2>
       <p>Da 22 anni la Dott.ssa Manuela Mereu segue i suoi pazienti a Cagliari con un approccio attento e personale, in uno studio pensato per mettere a proprio agio chiunque vi entri.</p>
-      <a class="pill-button pill-button--ghost" href="/chi-siamo">Scopri lo studio</a>
+      <a class="pill-button pill-button--ghost" href={withBase('/chi-siamo')}>Scopri lo studio</a>
     </div>
   </section>
 
@@ -109,7 +110,7 @@ const badges = [
           <ServiceCard
             title={service.data.title}
             shortDescription={service.data.shortDescription}
-            href={`/servizi/${service.id}`}
+            href={withBase(`/servizi/${service.id}`)}
             icon={service.data.icon}
             accent={service.data.accent}
             image={SERVICE_IMAGES[service.id as keyof typeof SERVICE_IMAGES].src}
@@ -119,7 +120,7 @@ const badges = [
       ))}
     </div>
     <div class="container services-teaser__more">
-      <a class="pill-button pill-button--ghost" href="/servizi">Vedi tutti i trattamenti</a>
+      <a class="pill-button pill-button--ghost" href={withBase('/servizi')}>Vedi tutti i trattamenti</a>
     </div>
   </section>
 
@@ -130,7 +131,7 @@ const badges = [
       <h2>Prenota la tua visita</h2>
       <p>{`Viale Armando Diaz, 30, Cagliari · Lun–Ven 09:00–20:00`}</p>
       <div class="closing-cta__actions">
-        <a class="pill-button pill-button--primary" href="/contatti">Prenota una visita</a>
+        <a class="pill-button pill-button--primary" href={withBase('/contatti')}>Prenota una visita</a>
         <a class="pill-button pill-button--ghost" href="tel:+393792938759">Chiama lo studio</a>
       </div>
     </div>
