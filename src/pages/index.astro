@@ -81,9 +81,7 @@ const badges = [
   <ArcDivider variant="smile" color="var(--sand)" bg="var(--teal-forest)" />
 
   <section class="studio-marquee" data-reveal>
-    <div class="container">
-      <p class="studio-marquee__label eyebrow">Uno sguardo sullo studio</p>
-    </div>
+    <p class="studio-marquee__label eyebrow">Uno sguardo sullo studio</p>
     <PhotoMarquee photos={studioPhotos} />
   </section>
 
@@ -282,6 +280,7 @@ const badges = [
 
   .studio-marquee__label {
     margin-bottom: var(--space-sm);
+    padding-inline: var(--space-lg);
   }
 
   .intro-doctor {
